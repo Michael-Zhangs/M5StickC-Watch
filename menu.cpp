@@ -32,6 +32,7 @@ void menu_setup()
     pinMode(G39, INPUT);
     M5.IMU.Init();
     M5.Lcd.setTextSize(0);
+    M5.Lcd.fillScreen(BLACK);
 }
 
 void menu_loop(void(*fuc1)(),char str1[],void(*fuc2)(),char str2[],void(*fuc3)(),char str3[],void(*fuc4)(),char str4[])
