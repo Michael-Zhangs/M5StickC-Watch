@@ -64,6 +64,14 @@ void menu_loop(void(*fuc1)(),char str1[],void(*fuc2)(),char str2[],void(*fuc3)()
     //y_d = y;
     y = 80-(int)menu_map(accX+cx, 1.13, -0.87, 80, 0);
     x = 160-(int)menu_map(accY+cy, 1.19, -0.81, 160, 0);
+    if(x<0)
+      cx-=0.01;
+    if(x>160)
+      cx+=0.01;
+    if(y<0)
+      cy-=0.01;
+    if(y>80)
+      cy+=0.01;
     if(x<80)
       if(y<40)//2
         if(old!=2)
