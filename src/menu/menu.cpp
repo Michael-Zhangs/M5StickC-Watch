@@ -41,8 +41,13 @@ void menu_loop(void(*fuc1)(),char str1[],void(*fuc2)(),char str2[],void(*fuc3)()
   float accX = 0.0F;
   float accY = 0.0F;
   float accZ = 0.0F;
-  int x,y,x_d,y_d;
+  int x,y;
+  //int x_d,y_d;
   int old = 0xff;
+  float cx=0,cy=0;
+  M5.IMU.getAccelData(&accX,&accY,&accZ);
+  cx = 0.15-accX;
+  cy = 0.17-accY;
   while(1)
   {
     M5.IMU.getAccelData(&accX,&accY,&accZ);
@@ -55,10 +60,10 @@ void menu_loop(void(*fuc1)(),char str1[],void(*fuc2)(),char str2[],void(*fuc3)()
     M5.Lcd.print(str3);
     M5.Lcd.setCursor(80+5, 40+5);//4
     M5.Lcd.print(str4);
-    x_d = x;
-    y_d = y;
-    y = (int)menu_map(accX, 1.13, -0.87, 80, 0);
-    x = (int)menu_map(accY, 1.19, -0.81, 160, 0);
+    //x_d = x;
+    //y_d = y;
+    y = 80-(int)menu_map(accX+cx, 1.13, -0.87, 80, 0);
+    x = 160-(int)menu_map(accY+cy, 1.19, -0.81, 160, 0);
     if(x<80)
       if(y<40)//2
         if(old!=2)
@@ -120,12 +125,15 @@ void menu_loop(void(*fuc1)(),char str1[],void(*fuc2)(),char str2[],void(*fuc3)()
       M5.Lcd.print(str3);
       M5.Lcd.setCursor(80+5, 40+5);//4
       M5.Lcd.print(str4);
+      M5.IMU.getAccelData(&accX,&accY,&accZ);
+      cx = 0.15-accX;
+      cy = 0.17-accY;
     }
-    if(x_d != x || y_d != y)
+    /*if(x_d != x || y_d != y)
     {
       M5.Lcd.drawPixel(x_d,y_d,BLACK);
       M5.Lcd.drawPixel(x,y,GREEN);
-    }
+    }*/
     if(digitalRead(G39) == LOW)
     {
       while(digitalRead(G39) == LOW);
